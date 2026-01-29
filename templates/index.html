@@ -12,19 +12,15 @@
       href="{{ url_for('static', filename='main.css') }}"
     />
   </head>
-
   <body>
     <div class="container">
       <h1>Anime Recommendation App</h1>
-
       <form
         id="recommendation_form"
         action="{{ url_for('recommend') }}"
         method="post"
       >
-        <label for="recommendation_type">
-          Select Recommendation Type:
-        </label>
+        <label for="recommendation_type">Select Recommendation Type:</label>
 
         <select id="recommendation_type" name="recommendation_type" required>
           <option value="">-- Select Recommendation Type --</option>
@@ -33,13 +29,11 @@
           <option value="genre_based">Genre-based</option>
         </select>
 
-        <!-- USER ID -->
         <div id="user_id_input" style="display: none">
           <label for="user_id">Enter User ID:</label>
           <input type="text" id="user_id" name="user_id" />
         </div>
 
-        <!-- ANIME NAME -->
         <div id="anime_name_input" style="display: none">
           <label for="anime_name">Enter Anime Name:</label>
           <input
@@ -51,22 +45,19 @@
           <datalist id="anime_list"></datalist>
         </div>
 
-        <!-- GENRE -->
+        <!-- GENRE INPUT (ADDED) -->
         <div id="genre_input" style="display: none">
           <label for="genre_name">Enter Genre:</label>
           <input
             type="text"
             id="genre_name"
             name="genre_name"
-            placeholder="e.g. Action, Romance, Fantasy"
+            placeholder="Action, Romance, Fantasy..."
           />
         </div>
 
-        <!-- NUMBER -->
         <div id="num_recommendations_input" style="display: none">
-          <label for="num_recommendations">
-            Number of Recommendations:
-          </label>
+          <label for="num_recommendations">Number of Recommendations:</label>
           <input
             type="number"
             id="num_recommendations"
@@ -96,32 +87,36 @@
             "num_recommendations_input"
           );
 
-          userIdInput.style.display = "none";
-          animeIdInput.style.display = "none";
-          genreInput.style.display = "none";
-          numRecommendationsInput.style.display = "none";
-
           if (this.value === "user_based") {
             userIdInput.style.display = "block";
+            animeIdInput.style.display = "none";
+            genreInput.style.display = "none";
             numRecommendationsInput.style.display = "block";
-          } 
-          else if (this.value === "item_based") {
+          } else if (this.value === "item_based") {
+            userIdInput.style.display = "none";
             animeIdInput.style.display = "block";
+            genreInput.style.display = "none";
             numRecommendationsInput.style.display = "block";
-          } 
-          else if (this.value === "genre_based") {
+          } else if (this.value === "genre_based") {
+            userIdInput.style.display = "none";
+            animeIdInput.style.display = "none";
             genreInput.style.display = "block";
             numRecommendationsInput.style.display = "block";
+          } else {
+            userIdInput.style.display = "none";
+            animeIdInput.style.display = "none";
+            genreInput.style.display = "none";
+            numRecommendationsInput.style.display = "none";
           }
         });
 
-      // AUTOCOMPLETE
+      // AUTOCOMPLETE (UNCHANGED)
       $("#anime_name").on("input", function () {
         const input = this.value.toLowerCase();
         const dataList = document.getElementById("anime_list");
 
         $.ajax({
-          url: "/autocomplete",
+          url: `/autocomplete`,
           data: { term: input },
           dataType: "json",
           success: function (data) {
