@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link
+      href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <title>Recommended Anime</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{{ url_for('static', filename='main.css') }}"
+    />
+  </head>
+
+  <body>
+    <div class="heading text-center mt-5 mb-3">
+      <p class="text-3xl font-bold text-[#00CC99]">
+        Recommended Anime
+      </p>
+      <a href="{{ url_for('home') }}" class="text-sm text-gray-400 hover:underline">
+        &lt; Go back to Home
+      </a>
+    </div>
+
+    <div class="w-full text-white">
+
+      <!-- USER BASED -->
+      {% if recommendation_type == "user_based" %}
+
+        {% if animes is none or animes.empty %}
+          <p class="flex justify-center">{{ message }}</p>
+        {% else %}
+          <div class="animes w-full flex justify-center flex-wrap">
+            {% for anime in animes.iterrows() %}
+              {% include "shared_card.html" %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+      <!-- ITEM BASED -->
+      {% elif recommendation_type == "item_based" %}
+
+        {% if animes is none or animes.empty %}
+          <p class="flex justify-center">
+            No recommendations found for this anime.
+          </p>
+        {% else %}
+          <div class="animes w-full flex justify-center flex-wrap">
+            {% for anime in animes.iterrows() %}
+              {% include "shared_card.html" %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+      <!-- GENRE BASED -->
+      {% elif recommendation_type == "genre_based" %}
+
+        {% if animes is none or animes.empty %}
+          <p class="flex justify-center">
+            No recommendations found for this genre.
+          </p>
+        {% else %}
+          <div class="animes w-full flex justify-center flex-wrap">
+            {% for anime in animes.iterrows() %}
+              {% include "shared_card.html" %}
+            {% endfor %}
+          </div>
+        {% endif %}
+
+      {% endif %}
+
+      <a
+        href="{{ url_for('home') }}"
+        class="block text-center mt-10 text-[#00CC99] hover:underline"
+      >
+        Go back to Home
+      </a>
+    </div>
+  </body>
+</html>
